@@ -1,12 +1,19 @@
 {
   "name": "my-package",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pre-install": "npm i",
+    "build": "npx ts-node index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@types/node": "^20.14.11",
+    "encoding": "^0.1.13",
+    "fs-extra": "^11.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
 }
