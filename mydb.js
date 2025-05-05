@@ -16,3 +16,5 @@ insert.run('Admin', 'admin');
 
 const rows = db.prepare('SELECT * FROM users').all();
 console.log(rows);
+
+//login password create
