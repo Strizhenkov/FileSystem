@@ -17,7 +17,7 @@ export class FileItem implements IModifierResource {
 
     create () : boolean {
         try {
-            fs.writeFileSync(this._resource.path, '');
+            fs.writeFileSync(this._resource.path + '\\' + this._fileName, '');
             return true;
         } catch {
             return false;

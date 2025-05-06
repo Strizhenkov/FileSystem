@@ -1,3 +1,5 @@
+import { runWebServer } from './app';
+
 export interface IAppType {}
 
 export const App = (options: IAppType) => {
@@ -7,3 +9,5 @@ export const App = (options: IAppType) => {
         }
     }
 };
+
+export const runApp = runWebServer;
