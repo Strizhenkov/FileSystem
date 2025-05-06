@@ -26,7 +26,7 @@ export class FileItem implements IModifierResource {
 
     delete () : boolean {
         try {
-            fs.unlinkSync(this._resource.path);
+            fs.unlinkSync(this._resource.path + '\\' + this._fileName);
             return true;
         } catch {
             return false;
