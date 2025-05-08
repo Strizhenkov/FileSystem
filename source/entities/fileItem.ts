@@ -1,6 +1,6 @@
-import {ResourceItem, IModifierResource} from './resourceItem';
-import {DirectoryItem} from './directoryItem';
 import fs from 'fs';
+import {IModifierResource, ResourceItem} from './resourceItem';
+import {DirectoryItem} from './directoryItem';
 
 export class FileItem implements IModifierResource {
     private _fileName: string;

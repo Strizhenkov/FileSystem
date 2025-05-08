@@ -1,6 +1,6 @@
+import fs from 'fs';
 import {ResourceItem, IModifierResourceWithRights} from './resourceItem';
 import {FileItem} from './fileItem';
-import fs from 'fs';
 
 export enum AccessLevel {
     NotAuthorized = 0,

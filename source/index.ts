@@ -1,4 +1,4 @@
-import { runWebServer } from './app';
+import {runWebServer} from './app';
 
 export interface IAppType {}
 

@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import path from 'path';
-import {createFile, deleteFile, renameFile} from '../../logic-layer/commandOperator';
+import {createFile, deleteFile, renameFile} from '../commandOperator';
 
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/form.html'));

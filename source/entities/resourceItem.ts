@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { AccessLevel } from './directoryItem';
+import {AccessLevel} from './directoryItem';
 
 export interface IResourceItem {
     path: string;

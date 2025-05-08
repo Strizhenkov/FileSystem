@@ -1,5 +1,5 @@
 import path from 'path'
-import {FileItem} from '../entities/fileItem';
+import {FileItem} from '../Entities/fileItem';
 
 function basicSetUpFile(filePath: string) {
     const file = new FileItem(path.basename(filePath));
