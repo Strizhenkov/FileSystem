@@ -8,6 +8,24 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/form.html'));
 });
 
+/**
+ * @swagger
+ * /api/file/create:
+ *   post:
+ *     summary: Создать файл
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               path:
+ *                 type: string
+ *     response:
+ *       200:
+ *         description: Файл создан
+ */
 router.post('/create', (req, res) => {
     const filePath = req.body.path;
     if (!filePath) return res.status(400).send('Путь к файлу не передан');
@@ -15,6 +33,24 @@ router.post('/create', (req, res) => {
     res.redirect('/');
 });
 
+/**
+ * @swagger
+ * /api/file/delete:
+ *   delete:
+ *     summary: Удалить файл
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               path:
+ *                 type: string
+ *     response:
+ *       200:
+ *         description: Файл удален
+ */
 router.post('/delete', (req, res) => {
     const filePath = req.body.path;
     if (!filePath) return res.status(400).send('Путь к файлу не передан');
@@ -22,6 +58,26 @@ router.post('/delete', (req, res) => {
     res.redirect('/');
 });
 
+/**
+ * @swagger
+ * /api/file/rename:
+ *   patch:
+ *     summary: Переименовать файл
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               path:
+ *                 type: string
+ *               newName:
+ *                 type: string
+ *     response:
+ *       200:
+ *         description: Файл переименован
+ */
 router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к файлу не передан');
