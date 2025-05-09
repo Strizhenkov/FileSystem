@@ -1,16 +1,15 @@
 import express from 'express';
 import path from 'path';
-import fileRoutes from './Controller/routes/routes';
-const app = express();
+import fileRoutes from './Controller/routes/fileRoutes';
 
 export function runWebServer() {
+    const app = express();
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, './View/static')));
+    app.use('/api/file', fileRoutes);
 
-    app.set('views', path.join(__dirname, 'views'));
-
-    app.use('/', fileRoutes);
-
+    app.get('/', (_req, res) => {res.sendFile(path.join(__dirname, './View/static/form.html'))});
+    
     app.listen(3000, () => console.log('Сервер запущен на http://localhost:3000'));
 }

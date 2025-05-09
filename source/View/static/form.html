@@ -6,21 +6,21 @@
 </head>
 <body>
   <h1>Создать файл</h1>
-  <form method="POST" action="/create-file">
+  <form method="POST" action="/api/file/create">
     <label>Путь к файлу:</label>
     <input type="text" name="path" required>
     <button type="submit" style="color: green;">Создать файл</button>
   </form>
 
   <h1>Удалить файл</h1>
-  <form method="POST" action="/delete-file">
+  <form method="POST" action="/api/file/delete">
     <label>Путь к файлу:</label>
     <input type="text" name="path" required />
     <button type="submit" style="color: red;">Удалить файл</button>
   </form>
 
   <h1>Переименовать файл</h1>
-  <form method="POST" action="/rename-file">
+  <form method="POST" action="/api/file/rename">
     <label>Старый путь к файлу:</label>
     <input type="text" name="path" required/>
     <label>Новое имя файла:</label>
