@@ -1,22 +1,15 @@
-import path from 'path'
-import {FileItem} from '../Entities/fileItem';
-
-function basicSetUpFile(filePath: string) {
-    const file = new FileItem(path.basename(filePath));
-    file.setFolder(path.dirname(filePath));
-    return file;
-}
+import {FileItem} from '../Entities/FileSystemItems/fileItem';
 
 export function createFile(filePath) {
-    return basicSetUpFile(filePath).create();
+    return new FileItem(filePath).create();
 }
 
 export function deleteFile(filePath: string): boolean {
-    return basicSetUpFile(filePath).delete();
+    return new FileItem(filePath).delete();
 }
 
 export function renameFile(filePath: string, newName: string): boolean {
-    return basicSetUpFile(filePath).rename(newName);
+    return new FileItem(filePath).rename(newName);
 }
 
 module.exports = {createFile, deleteFile, renameFile};
