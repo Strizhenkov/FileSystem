@@ -1,13 +1,13 @@
 import express from 'express';
-import {createFile, deleteFile, renameFile} from '../commandOperator';
+import {createDirectory, deleteDirectory, renameDirectory} from '../commandOperator';
 
 const router = express.Router();
 
 /**
  * @swagger
- * /api/file/create:
+ * /api/directory/create:
  *   post:
- *     summary: Создать файл
+ *     summary: Создать папку
  *     requestBody:
  *       required: true
  *       content:
@@ -19,21 +19,20 @@ const router = express.Router();
  *                 type: string
  *     response:
  *       200:
- *         description: Файл создан
+ *         description: Папка создана
  */
 router.post('/create', (req, res) => {
     const path = req.body.path;
-    console.log('path =', path); 
-    if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = createFile(path);
+    if (!path) return res.status(400).send('Путь к директории не передан');
+    const result = createDirectory(path);
     res.redirect('/');
 });
 
 /**
  * @swagger
- * /api/file/delete:
+ * /api/directory/delete:
  *   delete:
- *     summary: Удалить файл
+ *     summary: Удалить папку
  *     requestBody:
  *       required: true
  *       content:
@@ -45,20 +44,20 @@ router.post('/create', (req, res) => {
  *                 type: string
  *     response:
  *       200:
- *         description: Файл удален
+ *         description: Папка удалена
  */
 router.post('/delete', (req, res) => {
     const path = req.body.path;
-    if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = deleteFile(path);
+    if (!path) return res.status(400).send('Путь к директории не передан');
+    const result = deleteDirectory(path);
     res.redirect('/');
 });
 
 /**
  * @swagger
- * /api/file/rename:
+ * /api/directory/rename:
  *   patch:
- *     summary: Переименовать файл
+ *     summary: Переименовать папку
  *     requestBody:
  *       required: true
  *       content:
@@ -72,13 +71,13 @@ router.post('/delete', (req, res) => {
  *                 type: string
  *     response:
  *       200:
- *         description: Файл переименован
+ *         description: Папка переименована
  */
 router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
-    if (!path) return res.status(400).send('Путь к файлу не передан');
-    if (!newName) return res.status(400).send('Новое имя файла не передан');
-    const result = renameFile(path, newName);
+    if (!path) return res.status(400).send('Путь к директории не передан');
+    if (!newName) return res.status(400).send('Новое имя директории не передано');
+    const result = renameDirectory(path, newName);
     res.redirect('/');
 });
 

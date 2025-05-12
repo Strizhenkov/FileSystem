@@ -1,6 +1,6 @@
 import {ResourceItem} from './resourceItem';
 import {PathSpliter} from '../PathSplit/pathSpliter';
-import {IModifierResource} from './ImodifierResource';
+import {IModifierResource} from './iModifierResource';
 
 export class FileItem implements IModifierResource {
     private _fileName: string;
@@ -27,7 +27,7 @@ export class FileItem implements IModifierResource {
     }
 
     rename(newName : string) : boolean {
-        const result = (this._directoryName !== newName) && this._resource.rename(newName);
+        const result = (this._fileName !== newName) && this._resource.rename(newName);
         if (result) this._fileName = newName;
         return result;
     }

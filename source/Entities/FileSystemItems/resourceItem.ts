@@ -46,13 +46,13 @@ export class ResourceItem implements IResourceItem {
 
     deleteDirectory(): boolean {
         if (!this.isExists()) return false;
-        return this.tryAction(() => fs.rmdirSync(this._path));
+        return this.tryAction(() => fs.rmSync(this._path, {recursive: true, force: true}));
     }
 
     rename(newName: string): boolean {
         if (!this.isExists()) return false;
         const newPath = path.join(path.dirname(this._path), newName);
-        return this.tryAction(() => {fs.renameSync(this._path, newPath); this._path = newName;});
+        return this.tryAction(() => {fs.renameSync(this._path, newPath); this._path = newPath;});
     }
 
     isExists () : boolean {

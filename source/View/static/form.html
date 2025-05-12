@@ -21,11 +21,34 @@
 
   <h1>Переименовать файл</h1>
   <form method="POST" action="/api/file/rename">
-    <label>Старый путь к файлу:</label>
+    <label>Путь к файлу:</label>
     <input type="text" name="path" required/>
     <label>Новое имя файла:</label>
     <input type="text" name="newName" required/>
     <button type="submit" style="color: yellow;">Переименовать файл</button>
+  </form>
+
+  <h1>Создать папку</h1>
+  <form method="POST" action="/api/directory/create">
+    <label>Путь к папке:</label>
+    <input type="text" name="path" required>
+    <button type="submit" style="color: green;">Создать папку</button>
+  </form>
+
+  <h1>Удалить папку</h1>
+  <form method="POST" action="/api/directory/delete">
+    <label>Путь к папке:</label>
+    <input type="text" name="path" required>
+    <button type="submit" style="color: red;">Удалить папку</button>
+  </form>
+
+  <h1>Переименовать папку</h1>
+  <form method="POST" action="/api/directory/rename">
+    <label>Путь к папке:</label>
+    <input type="text" name="path" required/>
+    <label>Новое имя папки:</label>
+    <input type="text" name="newName" required/>
+    <button type="submit" style="color: yellow;">Переименовать папку</button>
   </form>
 </body>
 </html>

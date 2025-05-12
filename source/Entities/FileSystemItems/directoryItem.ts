@@ -1,7 +1,7 @@
 import {ResourceItem} from './resourceItem';
 import {FileItem} from './fileItem';
 import {PathSpliter} from '../PathSplit/pathSpliter';
-import {IModifierResource} from './ImodifierResource';
+import {IModifierResource} from './iModifierResource';
 
 export class DirectoryItem implements IModifierResource {
     private _directoryName: string;
@@ -28,22 +28,20 @@ export class DirectoryItem implements IModifierResource {
     }
 
     delete () : boolean {
-        try {
-            for (let file of this._files) {
-                file.delete();
-            }
-            for (let dir of this._directories) {
-                dir.delete();
-            }
-            this._resource.deleteDirectory();
-            return true;
-        } catch {
-            return false;
+        const result = this._resource.deleteDirectory();
+        if (!result) return false;
+        for (let file of this._files) {
+            file.delete();
         }
+        for (let dir of this._directories) {
+            dir.delete();
+        }
+        return true;
     }
 
     rename(newName: string): boolean {
-        const result = (this._directoryName !== newName) && this._resource.rename(newName);
+        if (this._directoryName === newName) return false;
+        const result = this._resource.rename(newName);
         if (!result) return false;
         this._directoryName = newName;
         for (let file of this._files) {
