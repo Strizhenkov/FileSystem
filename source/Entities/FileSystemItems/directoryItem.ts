@@ -15,12 +15,32 @@ export class DirectoryItem implements IModifierResource {
         const splitedPath = new PathSpliter(path).resolvePath();
         this._directoryName = splitedPath.ItemName;
         this._parentDirectoryName = splitedPath.ParentItemName;
-        this._files = [];
-        this._directories = [];
+        this.updateDirectoryData();
     }
     
     set parentDirectoryName(parentDirectoryName : string){
         this._parentDirectoryName = parentDirectoryName;
+    }
+
+    private updateDirectoryData() {
+        const files: FileItem[] = [];
+        const directories: DirectoryItem[] = [];
+        const items = this._resource.getDirectoryData();
+
+        for (let itemName of items) {
+            const fullItemPath = this._resource.fullSubPath(itemName);
+            const subResource = new ResourceItem(fullItemPath);
+            
+            if (!subResource.isExists()) continue;
+
+            if (subResource.isDirectory())
+                directories.push(new DirectoryItem(fullItemPath));
+            else
+                files.push(new FileItem(fullItemPath));
+        }
+
+        this._files = files;
+        this._directories = directories;
     }
 
     create () : boolean {

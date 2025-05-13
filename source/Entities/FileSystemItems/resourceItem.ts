@@ -20,7 +20,8 @@ export class ResourceItem implements IResourceItem {
         return this._path;
     }
 
-    private tryAction(action: () => void): boolean {
+    private tryAction(condition: boolean, action: () => void): boolean {
+        if (!condition) return false;
         try {
             action();
             return true;
@@ -30,29 +31,36 @@ export class ResourceItem implements IResourceItem {
     }
 
     createFile(): boolean {
-        if (this.isExists()) return false;
-        return this.tryAction(() => fs.writeFileSync(this._path, ''));
+        return this.tryAction(!this.isExists(), () => fs.writeFileSync(this._path, ''));
     }
 
     deleteFile(): boolean {
-        if (!this.isExists()) return false;
-        return this.tryAction(() => fs.unlinkSync(this._path));
+        return this.tryAction(this.isExists(), () => fs.unlinkSync(this._path));
     }
 
     createDirectory(): boolean {
-        if (this.isExists()) return false;
-        return this.tryAction(() => fs.mkdirSync(this._path));
+        return this.tryAction(!this.isExists(), () => fs.mkdirSync(this._path));
     }
 
     deleteDirectory(): boolean {
-        if (!this.isExists()) return false;
-        return this.tryAction(() => fs.rmSync(this._path, {recursive: true, force: true}));
+        return this.tryAction(this.isExists(), () => fs.rmSync(this._path, {recursive: true, force: true}));
     }
 
     rename(newName: string): boolean {
-        if (!this.isExists()) return false;
         const newPath = path.join(path.dirname(this._path), newName);
-        return this.tryAction(() => {fs.renameSync(this._path, newPath); this._path = newPath;});
+        return this.tryAction(this.isExists(), () => {fs.renameSync(this._path, newPath); this._path = newPath;});
+    }
+
+    getDirectoryData(): string[] {
+        return this.tryAction(this.isExists(), () => fs.readdirSync(this._path)) ? fs.readdirSync(this._path) : [];
+    }
+
+    fullSubPath(name: string): string {
+        return path.join(this._path, name);
+    }
+
+    isDirectory(): boolean {
+        return this.tryAction(true, () => fs.statSync(this._path).isDirectory());
     }
 
     isExists () : boolean {
