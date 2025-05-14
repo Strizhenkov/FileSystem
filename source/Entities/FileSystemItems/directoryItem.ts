@@ -22,6 +22,14 @@ export class DirectoryItem implements IModifierResource {
         this._parentDirectoryName = parentDirectoryName;
     }
 
+    get itemName(): string {
+        return this._directoryName;
+    }
+
+    get parentFolderName(): string {
+        return this._parentDirectoryName;
+    }
+
     private updateDirectoryData() {
         const files: FileItem[] = [];
         const directories: DirectoryItem[] = [];
@@ -50,6 +58,7 @@ export class DirectoryItem implements IModifierResource {
     delete () : boolean {
         const result = this._resource.deleteDirectory();
         if (!result) return false;
+
         for (let file of this._files) {
             file.delete();
         }
@@ -63,13 +72,28 @@ export class DirectoryItem implements IModifierResource {
         if (this._directoryName === newName) return false;
         const result = this._resource.rename(newName);
         if (!result) return false;
+
         this._directoryName = newName;
         for (let file of this._files) {
-            file.directoryName = newName;
+            file.parentDirectoryName = newName;
         }
         for (let directory of this._directories) {
             directory.parentDirectoryName = newName;
+        
         }
         return true;
+    }
+
+    getData(): string[] {
+        const data: string[] = [];
+
+        for (let file of this._files) {
+            data.push(file.itemName);
+        }
+        for (let dir of this._directories) {
+            data.push(dir.itemName);
+        }
+
+        return data.sort();
     }
 }

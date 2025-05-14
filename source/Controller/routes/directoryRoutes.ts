@@ -1,5 +1,5 @@
 import express from 'express';
-import {createDirectory, deleteDirectory, renameDirectory} from '../commandOperator';
+import {createDirectory, deleteDirectory, renameDirectory, getDirectoryData} from '../commandOperator';
 
 const router = express.Router();
 
@@ -79,6 +79,28 @@ router.post('/rename', (req, res) => {
     if (!newName) return res.status(400).send('Новое имя директории не передано');
     const result = renameDirectory(path, newName);
     res.redirect('/');
+});
+
+/**
+ * @swagger
+ * /api/directory/get:
+ *   get:
+ *     summary: Получить содержимое папки
+ *     parameters:
+ *       - in: query
+ *         name: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Содержимое папки получено
+ */
+router.get('/get', (req, res) => {
+    const path = req.query.path;
+    if (!path) return res.status(400).send('Путь к директории не передан');
+    const data = getDirectoryData(path);
+    res.render('directoryData', {path: path, data});
 });
 
 export default router;

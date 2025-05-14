@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Содержимое папки</title>
+</head>
+<body>
+  <h1>Содержимое папки: <%= path %></h1>
+  <ul>
+    <% data.forEach(item => { %>
+      <li><%= item %></li>
+    <% }) %>
+  </ul>
+  <a href="/">Назад</a>
+</body>
+</html>

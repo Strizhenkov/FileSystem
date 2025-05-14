@@ -50,5 +50,12 @@
     <input type="text" name="newName" required/>
     <button type="submit" style="color: yellow;">Переименовать папку</button>
   </form>
+
+  <h1>Показать содержимое папки</h1>
+  <form method="GET" action="/api/directory/get">
+    <label>Путь к папке:</label>
+    <input type="text" name="path" required/>
+    <button type="submit" style="color: blue;">Показать содержимое папки</button>
+  </form>
 </body>
 </html>

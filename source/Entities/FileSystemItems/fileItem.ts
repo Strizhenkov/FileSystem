@@ -14,8 +14,16 @@ export class FileItem implements IModifierResource {
         this._directoryName = splitedPath.ParentItemName;
     }
 
-    set directoryName(directoryName : string) {
+    set parentDirectoryName(directoryName : string) {
         this._directoryName = directoryName;
+    }
+
+    get parentFolderName(): string {
+        return this._directoryName;
+    }
+
+    get itemName(): string {
+        return this._fileName;
     }
 
     create () : boolean {

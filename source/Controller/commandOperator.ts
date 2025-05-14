@@ -24,3 +24,7 @@ export function deleteDirectory(directoryPath: string): boolean {
 export function renameDirectory(directoryPath: string, newName: string): boolean {
     return new DirectoryItem(directoryPath).rename(newName);
 }
+
+export function getDirectoryData(directoryPath: string): string[] {
+    return new DirectoryItem(directoryPath).getData();
+} 
