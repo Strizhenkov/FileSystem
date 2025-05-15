@@ -5,21 +5,34 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Directory
+ *   description: Работа с директориями
+ */
+
+/**
+ * @swagger
  * /api/directory/create:
  *   post:
- *     summary: Создать папку
+ *     summary: Создать директорию
+ *     tags: [Directory]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
  *             properties:
  *               path:
  *                 type: string
- *     response:
+ *                 description: Путь к директории
+ *     responses:
  *       200:
- *         description: Папка создана
+ *         description: Директория успешно создана
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/create', (req, res) => {
     const path = req.body.path;
@@ -32,19 +45,25 @@ router.post('/create', (req, res) => {
  * @swagger
  * /api/directory/delete:
  *   delete:
- *     summary: Удалить папку
+ *     summary: Удалить директорию
+ *     tags: [Directory]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
  *             properties:
  *               path:
  *                 type: string
- *     response:
+ *                 description: Путь к директории
+ *     responses:
  *       200:
- *         description: Папка удалена
+ *         description: Директория успешно удалена
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/delete', (req, res) => {
     const path = req.body.path;
@@ -57,21 +76,29 @@ router.post('/delete', (req, res) => {
  * @swagger
  * /api/directory/rename:
  *   patch:
- *     summary: Переименовать папку
+ *     summary: Переименовать директорию
+ *     tags: [Directory]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
+ *               - newName
  *             properties:
  *               path:
  *                 type: string
+ *                 description: Путь к директории
  *               newName:
  *                 type: string
- *     response:
+ *                 description: Новое имя директории
+ *     responses:
  *       200:
- *         description: Папка переименована
+ *         description: Директория успешно переименован
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
@@ -86,6 +113,7 @@ router.post('/rename', (req, res) => {
  * /api/directory/get:
  *   get:
  *     summary: Получить содержимое папки
+ *     tags: [Directory]
  *     parameters:
  *       - in: query
  *         name: path
@@ -95,6 +123,8 @@ router.post('/rename', (req, res) => {
  *     responses:
  *       200:
  *         description: Содержимое папки получено
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.get('/get', (req, res) => {
     const path = req.query.path;

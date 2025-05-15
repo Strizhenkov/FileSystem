@@ -8,6 +8,16 @@ export const swaggerOptions = {
         version: '1.0.0',
         description: 'API для файловой системы',
       },
+      tags: [
+        {
+          name: 'File',
+          description: 'Операции с файлами',
+        },
+        {
+          name: 'Directory',
+          description: 'Операции с директориями',
+        },
+      ],
     },
     apis: ['./source/Controller/routes/*.ts']
 };

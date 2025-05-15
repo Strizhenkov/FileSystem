@@ -5,21 +5,34 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: File
+ *   description: Работа с файлами
+ */
+
+/**
+ * @swagger
  * /api/file/create:
  *   post:
  *     summary: Создать файл
+ *     tags: [File]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
  *             properties:
  *               path:
  *                 type: string
- *     response:
+ *                 description: Путь к файлу
+ *     responses:
  *       200:
- *         description: Файл создан
+ *         description: Файл успешно создан
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/create', (req, res) => {
     const path = req.body.path;
@@ -34,18 +47,24 @@ router.post('/create', (req, res) => {
  * /api/file/delete:
  *   delete:
  *     summary: Удалить файл
+ *     tags: [File]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
  *             properties:
  *               path:
  *                 type: string
- *     response:
+ *                 description: Путь к файлу
+ *     responses:
  *       200:
- *         description: Файл удален
+ *         description: Файл успешно удален
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/delete', (req, res) => {
     const path = req.body.path;
@@ -59,20 +78,28 @@ router.post('/delete', (req, res) => {
  * /api/file/rename:
  *   patch:
  *     summary: Переименовать файл
+ *     tags: [File]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - path
+ *               - newName
  *             properties:
  *               path:
  *                 type: string
+ *                 description: Путь к файлу
  *               newName:
  *                 type: string
- *     response:
+ *                 description: Новое имя файла
+ *     responses:
  *       200:
- *         description: Файл переименован
+ *         description: Файл успешно переименован
+ *       400:
+ *         description: Неверные данные запроса
  */
 router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
