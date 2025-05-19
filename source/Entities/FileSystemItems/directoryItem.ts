@@ -1,6 +1,6 @@
 import {ResourceItem} from './resourceItem';
 import {FileItem} from './fileItem';
-import {PathSpliter} from '../PathSplit/pathSpliter';
+import {PathSpliter} from '../Helpers/pathSpliter';
 import {IModifierResource} from './iModifierResource';
 
 export class DirectoryItem implements IModifierResource {
@@ -13,8 +13,8 @@ export class DirectoryItem implements IModifierResource {
     constructor (path: string) {
         this._resource = new ResourceItem(path);
         const splitedPath = new PathSpliter(path).resolvePath();
-        this._directoryName = splitedPath.ItemName;
-        this._parentDirectoryName = splitedPath.ParentItemName;
+        this._directoryName = splitedPath.itemName;
+        this._parentDirectoryName = splitedPath.parentItemName;
         this.updateDirectoryData();
     }
     

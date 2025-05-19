@@ -8,9 +8,9 @@ export class PathSpliter {
         this._path = path;
     }
 
-    resolvePath() {
+    resolvePath(): PathSplitResult {
         const itemName = path.basename(this._path);
         const parentItemName = path.basename(itemName);
-        return new PathSplitResult(itemName, parentItemName);
+        return {itemName, parentItemName};
     }
 }
