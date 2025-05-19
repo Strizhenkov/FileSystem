@@ -1,5 +1,5 @@
 import {DirectoryItem} from "../../Entities/FileSystemItems/directoryItem";
-import {IResourceStrategy} from "./IResourceStrategy";
+import {IResourceStrategy} from "./iResourceStrategy";
 
 export class DirectoryStrategy implements IResourceStrategy{
     private item: DirectoryItem;

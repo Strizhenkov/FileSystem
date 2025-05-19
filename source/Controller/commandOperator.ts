@@ -1,6 +1,6 @@
 import {DirectoryStrategy} from './ItemStrategy/directoryStrategy';
 import {FileStrategy} from './ItemStrategy/fileStrategy';
-import {IResourceStrategy} from './ItemStrategy/IResourceStrategy';
+import {IResourceStrategy} from './ItemStrategy/iResourceStrategy';
 
 export class CommandOperator {
     private strategy: IResourceStrategy;
