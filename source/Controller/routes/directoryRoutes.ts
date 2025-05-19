@@ -1,7 +1,8 @@
 import express from 'express';
-import {createDirectory, deleteDirectory, renameDirectory, getDirectoryData} from '../commandOperator';
+import {CommandOperator} from '../commandOperator';
 
 const router = express.Router();
+const obj = 'directory';
 
 /**
  * @swagger
@@ -37,7 +38,7 @@ const router = express.Router();
 router.post('/create', (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const result = createDirectory(path);
+    const result = new CommandOperator(obj, path).create();
     res.redirect('/');
 });
 
@@ -68,7 +69,7 @@ router.post('/create', (req, res) => {
 router.post('/delete', (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const result = deleteDirectory(path);
+    const result = new CommandOperator(obj, path).delete();
     res.redirect('/');
 });
 
@@ -104,7 +105,7 @@ router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к директории не передан');
     if (!newName) return res.status(400).send('Новое имя директории не передано');
-    const result = renameDirectory(path, newName);
+    const result = new CommandOperator(obj, path).rename(newName);
     res.redirect('/');
 });
 
@@ -129,7 +130,7 @@ router.post('/rename', (req, res) => {
 router.get('/get', (req, res) => {
     const path = req.query.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const data = getDirectoryData(path);
+    const data = new CommandOperator(obj, path).getData();
     res.render('directoryData', {path: path, data});
 });
 

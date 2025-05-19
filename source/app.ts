@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
-import fileRoutes from './Controller/routes/fileRoutes';
-import directoryRoutes from './Controller/routes/directoryRoutes';
+import fileRoutes from './Controller/Routes/fileRoutes';
+import directoryRoutes from './Controller/Routes/directoryRoutes';
 import swaggerUi from 'swagger-ui-express';
 import {swaggerSpec} from './swaggerConfig';
 

@@ -1,7 +1,8 @@
 import express from 'express';
-import {createFile, deleteFile, renameFile} from '../commandOperator';
+import {CommandOperator} from '../commandOperator';
 
 const router = express.Router();
+const obj = 'file';
 
 /**
  * @swagger
@@ -38,7 +39,7 @@ router.post('/create', (req, res) => {
     const path = req.body.path;
     console.log('path =', path); 
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = createFile(path);
+    const result = new CommandOperator(obj, path).create();
     res.redirect('/');
 });
 
@@ -69,7 +70,7 @@ router.post('/create', (req, res) => {
 router.post('/delete', (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = deleteFile(path);
+    const result = new CommandOperator(obj, path).delete();
     res.redirect('/');
 });
 
@@ -105,7 +106,7 @@ router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к файлу не передан');
     if (!newName) return res.status(400).send('Новое имя файла не передан');
-    const result = renameFile(path, newName);
+    const result = new CommandOperator(obj, path).rename(newName);
     res.redirect('/');
 });
 
