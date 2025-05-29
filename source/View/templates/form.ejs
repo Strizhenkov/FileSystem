@@ -5,6 +5,9 @@
   <title>Файловый менеджер</title>
 </head>
 <body>
+  <h3>Пользователь: <%= user.username %></h3>
+  <h3>Уровень доступа: <%= user.accessLevel %></h3>
+
   <h1>Создать файл</h1>
   <form method="POST" action="/api/file/create">
     <label>Путь к файлу:</label>
