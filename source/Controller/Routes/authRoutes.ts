@@ -4,13 +4,14 @@ import path from 'path';
 
 const router = express.Router();
 const auth = new AuthService();
+auth.init();
 
 const basePath = path.join(__dirname, '../../../source');
 router.get('/login', (_req, res) => {res.sendFile(path.resolve(basePath, 'View/static/login.html'))});
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const {username, password} = req.body;
-    const result = auth.auth(username, password);
+    const result = await auth.auth(username, password);
     if (result.status) {
         req.session.user = {
             username,
@@ -23,8 +24,8 @@ router.post('/login', (req, res) => {
     res.status(400).send('Неверный логин или пароль');
 });
 
-router.post('/skip', (req, res) => {
-    const result = auth.auth("default", "");
+router.post('/skip', async (req, res) => {
+    const result = await auth.auth("default", "");
     req.session.user = {
         username: "default",
         accessLevel: result.access
