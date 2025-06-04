@@ -1,19 +1,19 @@
 import {AuthFeedBack} from "./Helpers/authFeedBack";
 import {hashString} from "./Helpers/hashFunction";
 import {User} from "../../Model/User";
-import {DbAdapter} from "./dbAdapter";
+import {DbAuthAdapter} from "../DbAdapters/dbAuthAdapter";
 
 const PATH_TO_DB = 'source/Model/User.db';
 
 export class AuthService {
-    dbStorage: DbAdapter = null;
+    dbStorage: DbAuthAdapter = null;
 
-    private handleOpenDb = (dbStorage: DbAdapter) => {
+    private handleOpenDb = (dbStorage: DbAuthAdapter) => {
         
     }
 
     init () {
-        this.dbStorage = new DbAdapter();
+        this.dbStorage = new DbAuthAdapter();
         this.dbStorage.init(PATH_TO_DB);
         this.dbStorage.openDb(this.handleOpenDb);
     }
