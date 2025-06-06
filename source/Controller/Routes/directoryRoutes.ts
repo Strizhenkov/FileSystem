@@ -35,10 +35,12 @@ const obj = 'directory';
  *       400:
  *         description: Неверные данные запроса
  */
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const result = new CommandOperator(obj, path).create();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.create();
     res.redirect('/');
 });
 
@@ -66,10 +68,12 @@ router.post('/create', (req, res) => {
  *       400:
  *         description: Неверные данные запроса
  */
-router.post('/delete', (req, res) => {
+router.post('/delete', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const result = new CommandOperator(obj, path).delete();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.delete();
     res.redirect('/');
 });
 
@@ -101,11 +105,13 @@ router.post('/delete', (req, res) => {
  *       400:
  *         description: Неверные данные запроса
  */
-router.post('/rename', (req, res) => {
+router.post('/rename', async (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к директории не передан');
     if (!newName) return res.status(400).send('Новое имя директории не передано');
-    const result = new CommandOperator(obj, path).rename(newName);
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.rename(newName);
     res.redirect('/');
 });
 
@@ -127,10 +133,12 @@ router.post('/rename', (req, res) => {
  *       400:
  *         description: Неверные данные запроса
  */
-router.get('/get', (req, res) => {
+router.get('/get', async (req, res) => {
     const path = req.query.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const data = new CommandOperator(obj, path).getData();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const data = await operator.getData();
     res.render('directoryData', {path: path, data});
 });
 

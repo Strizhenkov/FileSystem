@@ -1,31 +1,56 @@
+import {AccessLevel} from '../Entities/FileSystemItems/accessLevel';
+import {DbAccessAdapter} from './DbAdapters/dbAccessAdapter';
 import {DirectoryStrategy} from './ItemStrategy/directoryStrategy';
 import {FileStrategy} from './ItemStrategy/fileStrategy';
 import {IResourceStrategy} from './ItemStrategy/iResourceStrategy';
 
+const PATH_TO_DB = 'source/Model/Access.db';
+
 export class CommandOperator {
     private strategy: IResourceStrategy;
+    private dbStorage: DbAccessAdapter = null;
+    private access: AccessLevel;
+    private objPath : string;
 
-    constructor(type: 'file' | 'directory', path: string) {
+    constructor(type: 'file' | 'directory', path: string, access : AccessLevel) {
         if (type === 'file') {
             this.strategy = new FileStrategy(path);
         } else {
             this.strategy = new DirectoryStrategy(path)
         }
+        this.objPath = path;
+        this.access = access;
     }
 
-    create(): boolean {
-        return this.strategy.create();
+    private handleOpenDb = (dbStorage: DbAccessAdapter) => {
+        
     }
 
-    delete(): boolean {
-        return this.strategy.delete();
+    init () {
+        this.dbStorage = new DbAccessAdapter();
+        this.dbStorage.init(PATH_TO_DB);
+        this.dbStorage.openDb(this.handleOpenDb);
     }
 
-    rename(newName : string): boolean {
-        return this.strategy.rename(newName);
+    private async check() : Promise<boolean> {
+        console.log(this.access);
+        console.log(await this.dbStorage.getAccessLevelUser(this.objPath));
+        return this.access >= await this.dbStorage.getAccessLevelUser(this.objPath);
     }
 
-    getData(): string[] {
-        return (this.strategy as DirectoryStrategy).getData();
+    async create(): Promise<boolean> {
+        return await this.check() ? this.strategy.create() : false;
+    }
+
+    async delete(): Promise<boolean> {
+        return await this.check() ? this.strategy.delete() : false;
+    }
+
+    async rename(newName : string): Promise<boolean> {
+        return await this.check() ? this.strategy.rename(newName) : false;
+    }
+
+    async getData(): Promise<string[]> {
+        return await this.check() ? (this.strategy as DirectoryStrategy).getData() : [];
     }
 }

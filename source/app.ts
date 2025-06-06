@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import session from 'express-session';
 import {swaggerSpec} from './swaggerConfig';
 import authRoutes from './Controller/Routes/authRoutes';
-import {requireAuth} from './Controller/Auth/authFunctions';
+import {requireAuth} from './Controller/Auth/Helpers/authFunction';
 
 export function runWebServer() {
     const app = express();

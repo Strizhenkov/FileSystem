@@ -39,7 +39,9 @@ router.post('/create', (req, res) => {
     const path = req.body.path;
     console.log('path =', path); 
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = new CommandOperator(obj, path).create();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.create();
     res.redirect('/');
 });
 
@@ -70,7 +72,9 @@ router.post('/create', (req, res) => {
 router.post('/delete', (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const result = new CommandOperator(obj, path).delete();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.delete();
     res.redirect('/');
 });
 
@@ -106,7 +110,9 @@ router.post('/rename', (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к файлу не передан');
     if (!newName) return res.status(400).send('Новое имя файла не передан');
-    const result = new CommandOperator(obj, path).rename(newName);
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
+    operator.init();
+    const result = operator.rename(newName);
     res.redirect('/');
 });
 
