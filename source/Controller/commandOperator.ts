@@ -26,15 +26,13 @@ export class CommandOperator {
         
     }
 
-    init () {
+    async init() {
         this.dbStorage = new DbAccessAdapter();
         this.dbStorage.init(PATH_TO_DB);
-        this.dbStorage.openDb(this.handleOpenDb);
+        await this.dbStorage.openDb(this.handleOpenDb);
     }
 
     private async check() : Promise<boolean> {
-        console.log(this.access);
-        console.log(await this.dbStorage.getAccessLevelUser(this.objPath));
         return this.access >= await this.dbStorage.getAccessLevelUser(this.objPath);
     }
 
