@@ -7,8 +7,8 @@ export class DbAuthAdapter extends DbAdapter {
             const stmt = await this.db.prepare('SELECT * FROM users WHERE username = ? AND password = ?');
             const result = await stmt.get(username, password);
             await stmt.finalize();
-            if (!result) return AccessLevel.NotAuthorized;
-            return result.accessLevel;
+            const level = result ? result.accessLevel : AccessLevel.NotAuthorized;
+            return level;
         }
     }
 }

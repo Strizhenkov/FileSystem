@@ -1,5 +1,5 @@
-import {AuthFeedBack} from "./Helpers/authFeedBack";
-import {hashString} from "./Helpers/hashFunction";
+import {AuthFeedBack} from "./Helpers/authHelpers";
+import {hashString} from "./Helpers/authHelpers";
 import {User} from "../../Model/User";
 import {DbAuthAdapter} from "../DbAdapters/dbAuthAdapter";
 
@@ -8,27 +8,25 @@ const PATH_TO_DB = 'source/Model/User.db';
 export class AuthService {
     dbStorage: DbAuthAdapter = null;
 
-    private handleOpenDb = (dbStorage: DbAuthAdapter) => {
-        
-    }
-
-    init () {
+    private async init() {
         this.dbStorage = new DbAuthAdapter();
         this.dbStorage.init(PATH_TO_DB);
-        this.dbStorage.openDb(this.handleOpenDb);
+        await this.dbStorage.openDb(() => {});
     }
 
     private async findUser(username: string, password: string) : Promise<User> {
-        const result = await this.dbStorage.getAccessLevelUser(username, password);
-        if (!result) return null;
-        return new User(username, password, result);
+        const data = await this.dbStorage.getAccessLevelUser(username, password);
+        const user = data ? new User(username, password, data) : null;
+        return user;
     }
 
     async auth(username : string, password : string) : Promise<AuthFeedBack> {
+        await this.init();
         const authUser = await this.findUser(hashString(username), hashString(password));
+        const result = authUser != null 
+            ? { status: true, access: authUser.getAccessLevel() } 
+            : { status: false, access: 0 };
         await this.dbStorage.closeDb(() => {});
-        if (authUser != null)
-            return {status: true, access: authUser.getAccessLevel()};
-        return {status: false, access : 0};
+        return result;
     }
 }

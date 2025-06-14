@@ -1,4 +1,4 @@
-import {hashString} from "../Controller/Auth/Helpers/hashFunction";
+import {hashString} from "../Controller/Auth/Helpers/authHelpers";
 import {AccessLevel} from "../Entities/FileSystemItems/accessLevel";
 
 export class User {

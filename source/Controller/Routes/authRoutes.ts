@@ -4,7 +4,6 @@ import path from 'path';
 
 const router = express.Router();
 const auth = new AuthService();
-auth.init();
 
 const basePath = path.join(__dirname, '../../../source');
 router.get('/login', (_req, res) => {res.sendFile(path.resolve(basePath, 'View/static/login.html'))});

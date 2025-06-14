@@ -22,14 +22,10 @@ export class CommandOperator {
         this.access = access;
     }
 
-    private handleOpenDb = (dbStorage: DbAccessAdapter) => {
-        
-    }
-
     async init() {
         this.dbStorage = new DbAccessAdapter();
         this.dbStorage.init(PATH_TO_DB);
-        await this.dbStorage.openDb(this.handleOpenDb);
+        await this.dbStorage.openDb(() => {});
     }
 
     private async check() : Promise<boolean> {

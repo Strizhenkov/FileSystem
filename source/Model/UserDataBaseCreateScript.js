@@ -19,6 +19,7 @@ const insert = db.prepare('INSERT INTO users (username, password, accessLevel) V
 insert.run(hashString("default"), hashString(""), 0);
 insert.run(hashString("User"), hashString("user"), 1);
 insert.run(hashString("Admin"), hashString("admin"), 2);
+insert.finalize();
 
 //const rows = db.prepare('SELECT * FROM users').all();
 //console.log(rows);
