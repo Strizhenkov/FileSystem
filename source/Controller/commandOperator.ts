@@ -4,6 +4,11 @@ import {DirectoryStrategy} from './ItemStrategy/directoryStrategy';
 import {FileStrategy} from './ItemStrategy/fileStrategy';
 import {IResourceStrategy} from './ItemStrategy/iResourceStrategy';
 
+export enum ResourceType {
+    FILE = 'file',
+    DIRECTORY = 'directory',
+}
+
 const PATH_TO_DB = 'source/Model/Access.db';
 
 export class CommandOperator {
@@ -12,14 +17,21 @@ export class CommandOperator {
     private access: AccessLevel;
     private objPath : string;
 
-    constructor(type: 'file' | 'directory', path: string, access : AccessLevel) {
-        if (type === 'file') {
-            this.strategy = new FileStrategy(path);
-        } else {
-            this.strategy = new DirectoryStrategy(path)
-        }
+    constructor(type: ResourceType, path: string, access: AccessLevel) {
+        this.strategy = this.setStrategy(type, path);
         this.objPath = path;
         this.access = access;
+    }
+
+    private setStrategy(type : ResourceType, path : string) : IResourceStrategy {
+        switch(type) {
+            case ResourceType.FILE:
+                return new FileStrategy(path);
+            case ResourceType.DIRECTORY:
+                return new DirectoryStrategy(path);
+            default:
+                throw new Error(`Wrong type: ${type}`);
+        }
     }
 
     async init() {

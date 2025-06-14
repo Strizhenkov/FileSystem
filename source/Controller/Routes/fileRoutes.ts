@@ -1,8 +1,8 @@
 import express from 'express';
-import {CommandOperator} from '../commandOperator';
+import {CommandOperator, ResourceType} from '../commandOperator';
 
 const router = express.Router();
-const obj = 'file';
+const obj = ResourceType.FILE;
 
 /**
  * @swagger

@@ -1,5 +1,9 @@
 import path from 'path';
-import {PathSplitResult} from './pathSplitResult';
+
+export type PathSplitResult = {
+    itemName: string;
+    parentItemName: string;
+};
 
 export class PathSpliter {
     private _path: string;
