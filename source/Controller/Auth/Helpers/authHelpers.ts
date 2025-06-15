@@ -7,6 +7,19 @@ export type AuthFeedBack = {
     access: AccessLevel;
 };
 
+export type SessionUser = {
+    username: string;
+    accessLevel: AccessLevel;
+}
+
+export function getUserFromSession(req: Request):  SessionUser {
+    const user = req.session.user;
+    if (!user) return null;
+    return {
+        username: user.username,
+        accessLevel: user.accessLevel
+    };
+}
 
 export function requireAuth(req : Request, res : Response, next : NextFunction) {
     if (!req.session?.user) {

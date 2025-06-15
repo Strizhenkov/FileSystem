@@ -1,12 +1,13 @@
 import express from 'express';
 import {DbLogsAdapter} from '../DbAdapters/dbLogsAdapter';
+import {getUserFromSession} from '../Auth/Helpers/authHelpers';
 
 const router = express.Router();
 
 const PATH_TO_LOGS_DB = 'source/Model/Logs.db';
 
 router.get('/logs', async (req, res) => {
-    if (req.session.user.accessLevel !== 2) {
+    if (getUserFromSession(req).accessLevel !== 2) {
         return res.status(403).send('Доступ запрещен');
     }
 

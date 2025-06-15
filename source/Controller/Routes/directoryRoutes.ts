@@ -1,5 +1,6 @@
 import express from 'express';
 import {CommandOperator, ResourceType} from '../commandOperator';
+import {getUserFromSession} from '../Auth/Helpers/authHelpers';
 
 const router = express.Router();
 const obj = ResourceType.DIRECTORY;
@@ -38,7 +39,8 @@ const obj = ResourceType.DIRECTORY;
 router.post('/create', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.create();

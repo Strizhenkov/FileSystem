@@ -1,5 +1,6 @@
 import express from 'express';
 import {CommandOperator, ResourceType} from '../commandOperator';
+import {getUserFromSession} from '../Auth/Helpers/authHelpers';
 
 const router = express.Router();
 const obj = ResourceType.FILE;
@@ -39,7 +40,8 @@ router.post('/create', async (req, res) => {
     const path = req.body.path;
     console.log('path =', path); 
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.create();
@@ -73,7 +75,8 @@ router.post('/create', async (req, res) => {
 router.post('/delete', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.delete();
@@ -112,7 +115,8 @@ router.post('/rename', async (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к файлу не передан');
     if (!newName) return res.status(400).send('Новое имя файла не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.rename(newName);
