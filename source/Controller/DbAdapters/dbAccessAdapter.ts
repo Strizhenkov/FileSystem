@@ -1,8 +1,8 @@
 import {AccessLevel} from '../../Entities/FileSystemItems/accessLevel';
-import {DbAdapter} from './bdAdapter';
+import {DbAdapter} from './dbAdapter';
 
 export class DbAccessAdapter extends DbAdapter {
-    getAccessLevelUser = async (objectName: string) : Promise<AccessLevel>  => {
+    getAccessLevel = async (objectName: string) : Promise<AccessLevel>  => {
         if (this.isOpened()) {
             const stmt = await this.db.prepare('SELECT * FROM access WHERE objectName = ?');
             const data = await stmt.get(objectName);

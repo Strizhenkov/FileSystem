@@ -39,8 +39,9 @@ router.post('/create', async (req, res) => {
     const path = req.body.path;
     console.log('path =', path); 
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
-    await operator.init();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    await operator.initAccess();
+    await operator.initLogs();
     const result = operator.create();
     res.redirect('/');
 });
@@ -72,8 +73,9 @@ router.post('/create', async (req, res) => {
 router.post('/delete', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к файлу не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
-    await operator.init();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    await operator.initAccess();
+    await operator.initLogs();
     const result = operator.delete();
     res.redirect('/');
 });
@@ -110,8 +112,9 @@ router.post('/rename', async (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к файлу не передан');
     if (!newName) return res.status(400).send('Новое имя файла не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel);
-    await operator.init();
+    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    await operator.initAccess();
+    await operator.initLogs();
     const result = operator.rename(newName);
     res.redirect('/');
 });

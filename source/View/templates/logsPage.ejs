@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Журнал операций</title>
+</head>
+<body>
+  <h1>Журнал операций</h1>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Имя объекта</th>
+      <th>Тип</th>
+      <th>Операция</th>
+      <th>Пользователь</th>
+    </tr>
+    <% logs.forEach(log => { %>
+      <tr>
+        <td><%= log.id %></td>
+        <td><%= log.objectName %></td>
+        <td><%= log.objectType %></td>
+        <td><%= log.actionType %></td>
+        <td><%= log.username %></td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <a href="/">Назад</a>
+</body>
+</html>

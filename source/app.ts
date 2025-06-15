@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import fileRoutes from './Controller/Routes/fileRoutes';
 import directoryRoutes from './Controller/Routes/directoryRoutes';
+import logsRoutes from './Controller/Routes/logsRoutes';
 import swaggerUi from 'swagger-ui-express';
 import session from 'express-session';
 import {swaggerSpec} from './swaggerConfig';
@@ -18,6 +19,7 @@ export function runWebServer() {
     app.set('view engine', 'ejs');
     
     app.use('/', authRoutes);
+    app.use('/', logsRoutes);
     app.use('/api/file', fileRoutes);
     app.use('/api/directory', directoryRoutes);
     app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
