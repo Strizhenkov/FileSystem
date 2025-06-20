@@ -1,4 +1,4 @@
-import { ResourceType } from '../commandOperator';
+import {ResourceType} from '../resourceType';
 import {DbAdapter} from './dbAdapter';
 
 export type logRow = {

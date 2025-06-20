@@ -1,6 +1,7 @@
 import express from 'express';
-import {CommandOperator, ResourceType} from '../commandOperator';
+import {CommandOperator} from '../commandOperator';
 import {getUserFromSession} from '../Auth/Helpers/authHelpers';
+import {ResourceType} from '../resourceType';
 
 const router = express.Router();
 const obj = ResourceType.FILE;

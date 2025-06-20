@@ -1,6 +1,7 @@
 import express from 'express';
-import {CommandOperator, ResourceType} from '../commandOperator';
+import {CommandOperator} from '../commandOperator';
 import {getUserFromSession} from '../Auth/Helpers/authHelpers';
+import {ResourceType} from '../resourceType';
 
 const router = express.Router();
 const obj = ResourceType.DIRECTORY;
@@ -74,7 +75,8 @@ router.post('/create', async (req, res) => {
 router.post('/delete', async (req, res) => {
     const path = req.body.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.delete();
@@ -113,7 +115,8 @@ router.post('/rename', async (req, res) => {
     const {path, newName} = req.body;
     if (!path) return res.status(400).send('Путь к директории не передан');
     if (!newName) return res.status(400).send('Новое имя директории не передано');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const result = operator.rename(newName);
@@ -141,7 +144,8 @@ router.post('/rename', async (req, res) => {
 router.get('/get', async (req, res) => {
     const path = req.query.path;
     if (!path) return res.status(400).send('Путь к директории не передан');
-    const operator = new CommandOperator(obj, path, req.session?.user?.accessLevel, req.session?.user?.username);
+    const user = getUserFromSession(req)
+    const operator = new CommandOperator(obj, path, user.accessLevel, user.username);
     await operator.initAccess();
     await operator.initLogs();
     const data = await operator.getData();

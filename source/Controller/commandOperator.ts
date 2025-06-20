@@ -1,17 +1,11 @@
 import {AccessLevel} from '../Entities/FileSystemItems/accessLevel';
+import {PATH_TO_ACCESS_DB, PATH_TO_LOGS_DB} from '../Model/DbPath';
 import {DbAccessAdapter} from './DbAdapters/dbAccessAdapter';
 import {DbLogsAdapter} from './DbAdapters/dbLogsAdapter';
 import {DirectoryStrategy} from './ItemStrategy/directoryStrategy';
 import {FileStrategy} from './ItemStrategy/fileStrategy';
 import {IResourceStrategy} from './ItemStrategy/iResourceStrategy';
-
-export enum ResourceType {
-    FILE = 'file',
-    DIRECTORY = 'directory',
-}
-
-const PATH_TO_ACCESS_DB = 'source/Model/Access.db';
-const PATH_TO_LOGS_DB = 'source/Model/Logs.db';
+import {ResourceType} from './resourceType';
 
 export class CommandOperator {
     private strategy: IResourceStrategy;

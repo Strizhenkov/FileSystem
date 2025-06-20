@@ -2,8 +2,7 @@ import {AuthFeedBack} from "./Helpers/authHelpers";
 import {hashString} from "./Helpers/authHelpers";
 import {User} from "../../Model/User";
 import {DbAuthAdapter} from "../DbAdapters/dbAuthAdapter";
-
-const PATH_TO_DB = 'source/Model/User.db';
+import {PATH_TO_DB} from "../../Model/DbPath";
 
 export class AuthService {
     dbStorage: DbAuthAdapter = null;
